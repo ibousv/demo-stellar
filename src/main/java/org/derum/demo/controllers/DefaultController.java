@@ -28,9 +28,9 @@ public class DefaultController {
    public void transfert(@PathVariable String amount){
        //KeyPair account = stellarService.generateAccount();
        // Albedo primary account
-       KeyPair account = KeyPair.fromSecretSeed("SBGK62DOA32FE7FLVY7V7EJJXIKCNBXRPMAQIBKTVZ46MH34KCZJZN3V");
+       KeyPair account = KeyPair.fromSecretSeed("");
        //stellarService.fundAccount(account.getAccountId());
-       String DESTINALTAIRE = "GC6GMX46NAKLFGQEEPG2C5343LVOJASIL7BTXRTMRCUFZDE76ICGRRGI";
+       String DESTINALTAIRE = "";
        stellarService.transfertMoney(account, DESTINALTAIRE,amount);
        stellarService.getAccountBalance(DESTINALTAIRE);
    }
