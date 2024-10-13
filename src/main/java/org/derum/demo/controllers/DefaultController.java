@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.stellar.sdk.KeyPair;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/test")
 public class DefaultController {
@@ -30,9 +32,9 @@ public class DefaultController {
        // Albedo primary account
        KeyPair account = KeyPair.fromSecretSeed("");
        //stellarService.fundAccount(account.getAccountId());
-       String DESTINALTAIRE = "";
-       stellarService.transfertMoney(account, DESTINALTAIRE,amount);
-       stellarService.getAccountBalance(DESTINALTAIRE);
+       String DESTINATAIRE = "";
+       stellarService.transfertMoney(account, DESTINATAIRE,amount);
+       stellarService.getAccountBalance(DESTINATAIRE);
    }
 
 }
