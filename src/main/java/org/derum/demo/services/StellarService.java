@@ -6,18 +6,20 @@ import org.springframework.stereotype.Service;
 import org.stellar.sdk.*;
 import org.stellar.sdk.responses.AccountResponse;
 import org.stellar.sdk.responses.SubmitTransactionResponse;
-import org.stellar.sdk.xdr.Preconditions;
-
-import java.io.IOException;
 
 @Service
 public class StellarService {
+    /*
+    @TODO
+    Refactoring du Service
+    -> deposit
+    -> withdraw
+    -> transfer
+    -> fetchPayments
+   */
 
-    //private final KeyPair source = KeyPair.random();
-    //private final String publicKey = source.getAccountId();
-    //private final String  privateKey = new String(source.getSecretSeed());
-    private Operation operation;
-    Server server = new Server("https://horizon-testnet.stellar.org");
+
+    private final Server server = new Server("https://horizon-testnet.stellar.org");
 
     public KeyPair generateAccount(){
         return KeyPair.random();
@@ -62,20 +64,9 @@ public class StellarService {
                 .addOperation(new PaymentOperation.Builder(to, new AssetTypeNative(), amount).build())
                 .build();
 
-      /*  TransactionBuilder builder =
-                new TransactionBuilder(sourceAccount,Network.TESTNET)
-                        .setBaseFee(Transaction.MIN_BASE_FEE)
-                        .addPreconditions(TransactionPreconditions.builder()
-                                .timeBounds(new TimeBounds(1L,180L))
-                                .build())
-                        .addOperation(new PaymentOperation.Builder(to, new AssetTypeNative(), amount).build());
-        builder.build().sign(source);
-        Transaction tx = builder.build();*/
         tx.sign(source);
         SubmitTransactionResponse response = server.submitTransaction(tx);
         System.out.println("La transaction s'est bien passé");
-        //System.out.println(response);
-
         }
         catch(Exception e){
             System.out.println("La transaction a échoué");

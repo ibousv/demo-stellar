@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: 'derum'
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=derum_database'
+      - 'POSTGRES_PASSWORD=root'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'

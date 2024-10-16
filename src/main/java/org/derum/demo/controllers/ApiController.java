@@ -14,12 +14,12 @@ public class ApiController {
 
     @GetMapping("/balance/{accountId}")
     public String getAccountBalance(@PathVariable String accountId) {
-
+        return null;
     }
 
     @GetMapping("/transactions/{accountId}")
     public List<String> getTransactionHistory(@PathVariable String accountId) {
-
+        return null;
     }
 
 }
