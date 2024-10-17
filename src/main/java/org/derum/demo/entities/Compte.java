@@ -10,6 +10,11 @@ public class Compte {
 
     @Id
     private Long numero;
+
     private double solde;
-    private String cle;
+
+    private String cle_privee;
+
+    private String cle_public;
+
 }

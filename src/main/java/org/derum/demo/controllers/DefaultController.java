@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.stellar.sdk.KeyPair;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/test")
 public class DefaultController {
@@ -16,15 +14,15 @@ public class DefaultController {
     StellarService stellarService;
 
     @GetMapping("")
-   public String index(){
+    public String index(){
         return "Home API TEST";
    }
 
-   @GetMapping("/account")
+  /* @GetMapping("/account")
     public String[] fetchAccount(){
      KeyPair account = stellarService.generateAccount();
        return new String[]{account.getAccountId(),new String(account.getSecretSeed())};
-   }
+   }*/
 
    @PostMapping("/transaction/{amount}")
    public void transfert(@PathVariable String amount){

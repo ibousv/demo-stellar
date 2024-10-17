@@ -9,6 +9,7 @@ import org.stellar.sdk.responses.SubmitTransactionResponse;
 
 @Service
 public class StellarService {
+
     /*
     @TODO
     Refactoring du Service
@@ -21,8 +22,55 @@ public class StellarService {
 
     private final Server server = new Server("https://horizon-testnet.stellar.org");
 
-    public KeyPair generateAccount(){
+    /*public KeyPair generateAccount(){
         return KeyPair.random();
+    }*/
+
+    /*
+    * Gestion des comptes
+    */
+    public void createAccount(){
+
+    }
+
+    public void fundAccount(String publicKey){
+        String friendbotUrl = String.format(
+                "https://friendbot.stellar.org/?addr=%s",
+                publicKey);
+    }
+
+    public void updateAccount(){
+
+    }
+
+    /*
+    * Gestion des transactions
+    */
+    public void deposit(){
+
+    }
+
+    public void withdraw(){
+
+    }
+
+    public void transfer(){
+
+    }
+
+    public void fetchPayments(){
+
+    }
+
+    /*
+    *  Gestions des utilisateurs
+    */
+    public void authenticate(){
+
+    }
+
+    public void register(){
+
     }
 
     public void  getAccountBalance(String destinataireAccount){
@@ -47,13 +95,6 @@ public class StellarService {
         }
 
     }
-
-    public void fundAccount(String publicKey){
-        String friendbotUrl = String.format(
-                "https://friendbot.stellar.org/?addr=%s",
-                publicKey);
-    }
-
     public void transfertMoney(KeyPair source , String to,String amount)  {
         try
         {
