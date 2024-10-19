@@ -1,7 +1,6 @@
 package org.derum.demo.services;
 
 
-import lombok.Data;
 import org.springframework.stereotype.Service;
 import org.stellar.sdk.*;
 import org.stellar.sdk.responses.AccountResponse;
@@ -37,6 +36,7 @@ public class StellarService {
         String friendbotUrl = String.format(
                 "https://friendbot.stellar.org/?addr=%s",
                 publicKey);
+
     }
 
     public void updateAccount(){
