@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Administrateur extends Client{
 
     @Id

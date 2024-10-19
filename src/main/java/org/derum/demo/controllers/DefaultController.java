@@ -32,7 +32,7 @@ public class DefaultController {
        //stellarService.fundAccount(account.getAccountId());
        String DESTINATAIRE = "";
        stellarService.transfertMoney(account, DESTINATAIRE,amount);
-       stellarService.getAccountBalance(DESTINATAIRE);
+      /* stellarService.getAccountBalance(DESTINATAIRE);*/
    }
 
 }

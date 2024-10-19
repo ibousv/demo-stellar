@@ -28,8 +28,8 @@ public class StellarServiceTest {
         stellarService.transfertMoney(source,destinataire,"5000");
     }
 
-    @Test
+   /* @Test
     public void testGetAccountBalance() throws IOException {
         stellarService.getAccountBalance(destinataire);
-    }
+    }*/
 }

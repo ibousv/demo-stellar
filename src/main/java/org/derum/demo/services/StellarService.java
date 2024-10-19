@@ -1,7 +1,13 @@
 package org.derum.demo.services;
 
 
+import org.derum.demo.entities.Client;
+import org.derum.demo.entities.Compte;
+import org.derum.demo.repositories.ClientRepository;
+import org.derum.demo.repositories.CompteRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 import org.stellar.sdk.*;
 import org.stellar.sdk.responses.AccountResponse;
 import org.stellar.sdk.responses.SubmitTransactionResponse;
@@ -18,18 +24,35 @@ public class StellarService {
     -> fetchPayments
    */
 
+    private final ClientRepository clientRepository;
+    private final CompteRepository compteRepository;
 
-    private final Server server = new Server("https://horizon-testnet.stellar.org");
+    private final Server SERVER = new Server("https://horizon-testnet.stellar.org");
 
-    /*public KeyPair generateAccount(){
-        return KeyPair.random();
-    }*/
+    public StellarService(ClientRepository clientRepository, CompteRepository compteRepository) {
+        this.clientRepository = clientRepository;
+        this.compteRepository = compteRepository;
+    }
 
     /*
     * Gestion des comptes
     */
-    public void createAccount(){
+    public KeyPair generateAccount(){
+        return KeyPair.random();
+    }
 
+    public void createAccount(Client client){
+        KeyPair account = generateAccount();
+        String publicKey = account.getAccountId();
+        fundAccount(publicKey);
+
+        Compte compte = Compte.builder()
+                .id_client(client)
+                .cle_public(publicKey)
+                .cle_privee(new String(account.getSecretSeed()))
+                .build();
+
+        compteRepository.save(compte);
     }
 
     public void fundAccount(String publicKey){
@@ -58,7 +81,14 @@ public class StellarService {
 
     }
 
-    public void fetchPayments(){
+    public ResponseEntity<?> listTransactions(String publicKey){
+        RestClient restClient = RestClient.builder()
+                .baseUrl("https://horizon-testnet.stellar.org/accounts")
+                .build();
+
+        return restClient.get().uri("/{publicKey}/transactions",publicKey)
+                .retrieve()
+                .toEntity(Object.class);
 
     }
 
@@ -69,15 +99,17 @@ public class StellarService {
 
     }
 
-    public void register(){
-
+    public void register(Client client){
+        clientRepository.save(client);
+        createAccount(client);
     }
 
-    public void  getAccountBalance(String destinataireAccount){
+
+    public void  getAccountBalances(String destinataireAccount){
         try {
 
             AccountResponse account =
-                    server
+                    SERVER
                             .accounts()
                             .account(destinataireAccount);
 
@@ -95,10 +127,11 @@ public class StellarService {
         }
 
     }
+
     public void transfertMoney(KeyPair source , String to,String amount)  {
         try
         {
-        AccountResponse sourceAccount = server.accounts().account(source.getAccountId());
+        AccountResponse sourceAccount = SERVER.accounts().account(source.getAccountId());
         Transaction tx = new Transaction.Builder(sourceAccount,Network.TESTNET)
                 .setBaseFee(Transaction.MIN_BASE_FEE)
                 .setTimeout(180)
@@ -106,7 +139,7 @@ public class StellarService {
                 .build();
 
         tx.sign(source);
-        SubmitTransactionResponse response = server.submitTransaction(tx);
+        SubmitTransactionResponse response = SERVER.submitTransaction(tx);
         System.out.println("La transaction s'est bien passé");
         }
         catch(Exception e){
@@ -114,4 +147,6 @@ public class StellarService {
             System.out.println(e.getMessage());
         }
     }
+
+
 }
