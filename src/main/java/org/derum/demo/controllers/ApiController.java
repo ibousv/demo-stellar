@@ -25,7 +25,6 @@ public class ApiController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(){
-
         return ResponseEntity.ok("Vous etes connecte");
     }
 
