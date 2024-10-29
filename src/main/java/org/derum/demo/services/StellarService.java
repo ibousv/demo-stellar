@@ -62,9 +62,7 @@ public class StellarService {
 
     }
 
-    public void updateAccount(){
-
-    }
+    public void updateAccount(){}
 
     /*
     * Gestion des transactions
