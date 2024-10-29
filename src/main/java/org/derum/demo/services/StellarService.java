@@ -85,9 +85,7 @@ public class StellarService {
     /*
     *  Gestions des utilisateurs
     */
-    public void authenticate(){
-
-    }
+    public void authenticate(){}
 
     public void register(Client client){
         clientRepository.save(client);
@@ -96,7 +94,6 @@ public class StellarService {
 
     public void  getAccountBalances(String destinataireAccount){
         try {
-
             AccountResponse account =
                     SERVER
                             .accounts()
@@ -114,7 +111,6 @@ public class StellarService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     public void transfertMoney(KeyPair source , String to,String amount)  {
