@@ -69,17 +69,9 @@ public class StellarService {
     /*
     * Gestion des transactions
     */
-    public void deposit(){
-
-    }
-
-    public void withdraw(){
-
-    }
-
-    public void transfer(){
-
-    }
+    public void deposit(){}
+    public void withdraw(){}
+    public void transfer(){}
 
     public ResponseEntity<?> listTransactions(String publicKey){
         RestClient restClient = RestClient.builder()
@@ -103,7 +95,6 @@ public class StellarService {
         clientRepository.save(client);
         createAccount(client);
     }
-
 
     public void  getAccountBalances(String destinataireAccount){
         try {
@@ -141,12 +132,12 @@ public class StellarService {
         tx.sign(source);
         SubmitTransactionResponse response = SERVER.submitTransaction(tx);
         System.out.println("La transaction s'est bien passé");
+        
         }
         catch(Exception e){
             System.out.println("La transaction a échoué");
             System.out.println(e.getMessage());
         }
     }
-
 
 }
