@@ -2,6 +2,7 @@ package org.derum.demo.controllers;
 
 import org.derum.demo.entities.Client;
 import org.derum.demo.services.StellarService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class ApiController {
     }
 
     @GetMapping("/transactions/{accountId}")
-    public ResponseEntity<?> getTransactionHistory(@PathVariable String accountId) {
+    public ResponseEntity<String> getTransactionHistory(@PathVariable String accountId) {
         return stellarService.listTransactions(accountId);
     }
 

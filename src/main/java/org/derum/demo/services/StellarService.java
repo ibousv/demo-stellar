@@ -3,14 +3,20 @@ package org.derum.demo.services;
 
 import org.derum.demo.entities.Client;
 import org.derum.demo.entities.Compte;
+import org.derum.demo.mappers.OperationMapper;
 import org.derum.demo.repositories.ClientRepository;
 import org.derum.demo.repositories.CompteRepository;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.stellar.sdk.*;
 import org.stellar.sdk.responses.AccountResponse;
 import org.stellar.sdk.responses.SubmitTransactionResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class StellarService {
@@ -71,17 +77,31 @@ public class StellarService {
     public void withdraw(){}
     public void transfer(){}
 
-    public ResponseEntity<?> listTransactions(String publicKey){
+    public ResponseEntity<String> listTransactions(String publicKey){
         RestClient restClient = RestClient.builder()
                 .baseUrl("https://horizon-testnet.stellar.org/accounts")
                 .build();
-
-        return restClient.get().uri("/{publicKey}/transactions",publicKey)
+        ResponseEntity<Object> response = restClient.get()
+                .uri("/{publicKey}/transactions",publicKey)
                 .retrieve()
                 .toEntity(Object.class);
 
-    }
+         JSONObject jsonObject = new JSONObject(response);
+         JSONArray target = jsonObject.getJSONObject("body")
+                 .getJSONObject("_embedded")
+                 .getJSONArray("records");
 
+         List<String> records = new ArrayList<>();
+
+        for (int i = 0; i < target.length(); i++) {
+            records.add(target.getJSONObject(i)
+                    .getJSONObject("_links")
+                    .getJSONObject("operations").
+                    getString("href").substring(0,124));
+        }
+
+        return null;
+    }
     /*
     *  Gestions des utilisateurs
     */
